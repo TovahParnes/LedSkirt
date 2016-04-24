@@ -32,6 +32,10 @@ int intensityCurrent = intensityMin;
 int intensityInc = 50; 
 int intensityMax = 250; 
 
+CRGBPalette16 currentPalette;
+TBlendType    currentBlending;
+
+
 void setup() {
   Serial.begin(9600);
   delay(3000); // 3 second delay for recovery
@@ -50,7 +54,7 @@ void setup() {
 
 // List of patterns to cycle through.  Each is defined as a separate function below.
 typedef void (*SimplePatternList[])();
-SimplePatternList gPatterns = { rainbow, rainbowWithGlitter, confetti, sinelon, juggle, bpm };
+SimplePatternList gPatterns = { colorPalette1, rainbow, confetti, sinelon, juggle, bpm };
 
 uint8_t gCurrentPatternNumber = 0; // Index number of which pattern is current
 uint8_t gHue = 0; // rotating "base color" used by many of the patterns
@@ -144,6 +148,19 @@ void nextPattern()
   Serial.println("nextPattern");
   // add one to the current pattern number, and wrap around at the end
   gCurrentPatternNumber = (gCurrentPatternNumber + 1) % ARRAY_SIZE( gPatterns);
+}
+
+
+void colorPalette1() { 
+    static uint8_t startIndex = 0;
+    startIndex = startIndex + 1; /* motion speed */
+
+    int colorIndex = startIndex;
+       
+    for( int i = 0; i < NUM_LEDS; i++) {
+        leds[i] = ColorFromPalette( currentPalette, colorIndex, intensityCurrent, currentBlending);
+        colorIndex += 3;
+    }
 }
 
 void rainbow() 
