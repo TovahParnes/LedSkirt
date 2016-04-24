@@ -22,10 +22,10 @@ CRGB leds[NUM_LEDS];
 // Variables will change:
 int buttonPushCounter1 = 0;   // counter for the number of button presses
 int buttonState1 = 0;         // current state of the button
-int lastButtonState1 = 0;     // previous state of the button
+int lastButtonState1 = 1;     // previous state of the button
 int buttonPushCounter2 = 0;   // counter for the number of button presses
 int buttonState2 = 0;         // current state of the button
-int lastButtonState2 = 0;     // previous state of the button
+int lastButtonState2 = 1;     // previous state of the button
 
 int intensityMin = 50;
 int intensityCurrent = intensityMin;
@@ -54,7 +54,11 @@ void setup() {
 
 // List of patterns to cycle through.  Each is defined as a separate function below.
 typedef void (*SimplePatternList[])();
-SimplePatternList gPatterns = { colorPalette1, rainbow, confetti, sinelon, juggle, bpm };
+SimplePatternList gPatterns = { colorPalette1, colorPalette2, colorPalette4, colorPalette5, colorPalette6, colorPalette7, colorPalette8, confetti, sinelon, juggle, bpm };
+// SimplePatternList gPatterns = { colorPalette1, colorPalette2, colorPalette3, rainbow, confetti, sinelon, juggle, bpm };
+// SimplePatternList gPatterns = { colorPalette1, colorPalette2, rainbow };
+
+
 
 uint8_t gCurrentPatternNumber = 0; // Index number of which pattern is current
 uint8_t gHue = 0; // rotating "base color" used by many of the patterns
@@ -152,6 +156,94 @@ void nextPattern()
 
 
 void colorPalette1() { 
+    // Same as rainbow
+    Serial.println("colorPalette1");
+
+    currentPalette = RainbowColors_p;         
+    currentBlending = LINEARBLEND;
+
+    colorPaletteShow();
+}
+
+void colorPalette2() { 
+    // We like! 
+  
+    Serial.println("colorPalette2");
+
+    currentPalette = RainbowStripeColors_p;         
+    currentBlending = LINEARBLEND;
+
+    colorPaletteShow();
+}
+
+void colorPalette3() { 
+    // Not like 
+    
+    Serial.println("colorPalette3");
+
+    currentPalette = RainbowStripeColors_p;         
+    currentBlending = NOBLEND;
+
+    colorPaletteShow();
+}
+
+void colorPalette4() { 
+    // Blue-white, we like 
+    
+    Serial.println("colorPalette4");
+
+    currentPalette = CloudColors_p;         
+    currentBlending = LINEARBLEND;
+
+    colorPaletteShow();
+}
+
+void colorPalette5() { 
+    // We like 
+    
+    Serial.println("colorPalette5");
+
+    currentPalette = PartyColors_p;         
+    currentBlending = LINEARBLEND;
+
+    colorPaletteShow();
+}
+
+void colorPalette6() { 
+    // We like a lot, Ocean! 
+    
+    Serial.println("colorPalette6");
+
+    currentPalette = OceanColors_p;         
+    currentBlending = LINEARBLEND;
+
+    colorPaletteShow();
+}
+
+void colorPalette7() { 
+    // We like 
+    
+    Serial.println("colorPalette7");
+
+    currentPalette = LavaColors_p;         
+    currentBlending = LINEARBLEND;
+
+    colorPaletteShow();
+}
+
+void colorPalette8() { 
+    // we like 
+    
+    Serial.println("colorPalette8");
+
+    currentPalette = ForestColors_p;         
+    currentBlending = LINEARBLEND;
+
+    colorPaletteShow();
+}
+
+
+void colorPaletteShow() {
     static uint8_t startIndex = 0;
     startIndex = startIndex + 1; /* motion speed */
 
@@ -165,12 +257,16 @@ void colorPalette1() {
 
 void rainbow() 
 {
+  // worse than colorPalette1 
+  
   // FastLED's built-in rainbow generator
   fill_rainbow( leds, NUM_LEDS, gHue, 7);
 }
 
 void rainbowWithGlitter() 
 {
+  // Not like 
+  
   // built-in FastLED rainbow, plus some random sparkly glitter
   rainbow();
   addGlitter(80);
